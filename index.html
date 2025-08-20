@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadoras de Orçamento de Laje</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="text-center mb-4">Calculadoras de Orçamento de Laje</h1>
+
+  <!-- Abas de navegação -->
+  <ul class="nav nav-tabs" id="calcTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="simples-tab" data-bs-toggle="tab" data-bs-target="#calcSimples" type="button" role="tab">Calculadora Simples</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="avancada-tab" data-bs-toggle="tab" data-bs-target="#calcAvancada" type="button" role="tab">Calculadora Avançada</button>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <!-- Calculadora Simples -->
+    <div class="tab-pane fade show active" id="calcSimples" role="tabpanel">
+      <div class="card p-3">
+        <h2 class="text-center mb-3">Orçamento de Laje (Simples)</h2>
+
+        <label for="lajeTipo">Tipo de Laje</label>
+        <select id="lajeTipo" class="form-control">
+          <option value="">Selecione</option>
+          <option value="h08">H-08</option>
+          <option value="h08_5_16">H-08 5/16</option>
+          <option value="h08_3_8">H-08 3/8</option>
+          <option value="h08_1_2">H-08 1/2</option>
+          <option value="h12">H-12</option>
+          <option value="h12_5_16">H-12 5/16</option>
+          <option value="h12_3_8">H-12 3/8</option>
+          <option value="h12_1_2">H-12 1/2</option>
+          <option value="h16">H-16</option>
+          <option value="h16_5_16">H-16 5/16</option>
+          <option value="h16_3_8">H-16 3/8</option>
+          <option value="h16_1_2">H-16 1/2</option>
+          <option value="h20">H-20</option>
+          <option value="h20_5_16">H-20 5/16</option>
+          <option value="h20_3_8">H-20 3/8</option>
+          <option value="h20_1_2">H-20 1/2</option>
+        </select>
+        <input type="number" id="lajeQtd" class="form-control mt-2" placeholder="Quantidade (m²)" min="0">
+
+        <label for="telaTipo" class="mt-3">Tipo de Tela</label>
+        <select id="telaTipo" class="form-control">
+          <option value="">Selecione</option>
+          <option value="3.4">3,4 (20x20)</option>
+          <option value="4.2_20">4,2 (20x20)</option>
+          <option value="4.2_15">4,2 (15x15)</option>
+        </select>
+        <input type="number" id="telaQtd" class="form-control mt-2" placeholder="Quantidade (m²)" min="0">
+
+        <label for="caixasQtd" class="mt-3">Caixas de Luz</label>
+        <input type="number" id="caixasQtd" class="form-control" placeholder="Quantidade" min="0">
+
+        <button class="btn btn-success mt-3" onclick="calcularSimples()">Calcular</button>
+
+        <div class="resultado mt-3 p-3 border rounded" id="resultadoSimples"></div>
+      </div>
+    </div>
+
+    <!-- Calculadora Avançada -->
+    <div class="tab-pane fade" id="calcAvancada" role="tabpanel">
+      <div class="card p-3">
+        <!-- Conteúdo original da calculadora avançada -->
+        
+      <div class="card p-3">
+        <h2 class="text-center mb-3">Orçamento de Laje (Avançada)</h2>
+
+        <!-- Dados do cliente -->
+        <div class="card mb-4">
+          <div class="card-header">Dados do Cliente</div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label for="cliente" class="form-label">Nome do Cliente</label>
+              <input type="text" class="form-control" id="cliente">
+            </div>
+            <div class="col-md-6">
+              <label for="data" class="form-label">Data (DDMMAAAA)</label>
+              <input type="text" class="form-control" id="data">
+            </div>
+          </div>
+        </div>
+
+        <!-- Vigotes -->
+        <div class="card mb-4">
+          <div class="card-header">Vigotes</div>
+          <div class="card-body row g-3">
+            <div class="col-md-3">
+              <label for="tamanhoVigote" class="form-label">Tamanho (v)</label>
+              <input type="number" step="0.1" class="form-control" id="tamanhoVigote">
+            </div>
+            <div class="col-md-3">
+              <label for="comprimentoVigote" class="form-label">Comprimento (c)</label>
+              <input type="number" step="0.1" class="form-control" id="comprimentoVigote">
+            </div>
+            <div class="col-md-3 align-self-end">
+              <button class="btn btn-primary w-100" onclick="adicionarVigote()">Adicionar Vigote</button>
+            </div>
+          </div>
+          <div class="mt-3">
+            <label class="form-label">Vigotes Adicionados:</label>
+            <ul id="listaVigotes" class="list-group"></ul>
+          </div>
+        </div>
+
+        <!-- Opções -->
+        <div class="card mb-4">
+          <div class="card-header">Opções</div>
+          <div class="card-body row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Calcular Tela?</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tela" value="1" id="telaSim">
+                <label class="form-check-label" for="telaSim">Sim</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tela" value="2" id="telaNao" checked>
+                <label class="form-check-label" for="telaNao">Não</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Tipo de Cobertura:</label><br>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="cobertura" id="capa" value="capa">
+                <label class="form-check-label" for="capa">Capa de Cerâmica</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="cobertura" id="eps" value="eps">
+                <label class="form-check-label" for="eps">EPS</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Tipo de EPS:</label><br>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipoEps" id="eps1" value="1">
+                <label class="form-check-label" for="eps1">EPS de 1m</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipoEps" id="eps12" value="1.2">
+                <label class="form-check-label" for="eps12">EPS de 1,2m</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Relatório e ações -->
+        <div class="mb-3">
+          <button class="btn btn-success me-2" onclick="calcularOrcamento()">Calcular Orçamento</button>
+          <button class="btn btn-outline-secondary me-2" onclick="limparTudo()">Limpar Tudo</button>
+          <button class="btn btn-danger" onclick="gerarPDF()">Salvar PDF</button>
+        </div>
+
+        <div class="form-group">
+          <label for="relatorio" class="form-label">Relatório:</label>
+          <textarea id="relatorio" class="form-control" rows="10" readonly></textarea>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="orcamento-simples.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script src="orcamento-avancado.js"></script>
+</body>
+</html>

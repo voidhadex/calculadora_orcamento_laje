@@ -1,0 +1,55 @@
+body {
+  --cor-principal: #1e90ff;
+  --cor-secundaria: #187bcd;
+  --cor-fundo: #121212;
+  --cor-texto: #f1f1f1;
+  background-color: var(--cor-fundo) !important;
+  color: var(--cor-texto) !important;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, label {
+  color: var(--cor-principal);
+}
+
+.card {
+  background-color: #1e1e1e;
+  color: var(--cor-texto);
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(255,255,255,0.05);
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  background-color: #2a2a2a !important;
+  color: #fff !important;
+  border: 1px solid #555 !important;
+  border-radius: 8px !important;
+}
+
+.resultado {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.nav-tabs .nav-link {
+  color: var(--cor-texto);
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--cor-principal);
+  color: #fff;
+}
+
+
+.card-header {
+  background-color: #222;
+  color: var(--cor-texto);
+  border-bottom: 1px solid #333;
+}
